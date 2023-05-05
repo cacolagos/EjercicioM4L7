@@ -40,4 +40,7 @@ pipeline {
             slackSend(channel: '#fundamentos-de-devops', message: '¡El pipeline de Maven falló!')
         }
     }
+    }
+    }
+    }
 
