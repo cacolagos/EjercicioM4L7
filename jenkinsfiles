@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage('Build') {
+            steps {
+                // Configuración del entorno de Maven
+                sh 'export MAVEN_OPTS="-Xmx1024m"'
+                sh 'export PATH=$PATH:/usr/local/apache-maven-3.6.3/bin'
+                
+                // Compilación y empaquetado del proyecto Maven
+                sh 'mvn clean package'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                // Ejecución de pruebas unitarias
+                sh 'mvn test'
+            }
+        }
+    }
+    
+    post {
+        always {
+            // Publicar informes de prueba y cobertura
+            junit 'target/surefire-reports/*.xml'
+            cobertura 'target/site/cobertura/coverage.xml'
+        }
+        
+        success {
+            // Enviar notificación a Slack en caso de éxito
+            slackSend(channel: '#nombre-del-canal', message: '¡El pipeline de Maven se ejecutó con éxito!')
+        }
+        
+        failure {
+            // Enviar notificación a Slack en caso de fallo
+            slackSend(channel: '#nombre-del-canal', message: '¡El pipeline de Maven falló!')
+        }
+    }
+}
