@@ -22,11 +22,7 @@ pipeline {
     }
     
     post {
-        always {
-            // Publicar informes de prueba y cobertura
-            junit 'target/surefire-reports/*.xml'
-            cobertura 'target/site/cobertura/coverage.xml'
-        }
+        
         
         success {
             // Enviar notificación a Slack en caso de éxito
