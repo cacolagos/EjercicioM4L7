@@ -21,13 +21,13 @@ pipeline {
     }
         post {
             always {
-                slackSend(channel: '#fundamentos-de-devops', message: ' Estimado Fabián T, su pipeline se esta ejecutando, se le avisará si se ejecutó correctamente o no')
+                slackSend(channel: '#fundamentos-de-devops', message: 'Pipeline en ejecucion')
             }
             failure {
-                slackSend(channel: '#fundamentos-de-devops', message: ' :fire: Estimado Fabián T, su ppeline no se ejecutó, revise la configuración :fire:')
+                slackSend(channel: '#fundamentos-de-devops', message: ' :fire: Pipeline no se ejecutó :exclamation:')
             }
             success {
-                slackSend(channel: '#fundamentos-de-devops', message: ' Estimado Fabián T., su pipeline se ejecutó correctamente :smile: ...')
+                slackSend(channel: '#fundamentos-de-devops', message: ' pipeline se ejecutó correctamente :thumbsup: ...')
             }
         }
     }
