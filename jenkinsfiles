@@ -2,21 +2,27 @@ pipeline {
     agent any
     
     stages {
+    
         stage('Build') {
             steps {
-                // Configuración del entorno de Maven
-                sh 'export MAVEN_OPTS="-Xmx1024m"'
-                sh 'export PATH=$PATH:/usr/local/apache-maven-3.6.3/bin'
-                
-                // Compilación y empaquetado del proyecto Maven
-                sh 'mvn clean package'
+                  stage('Initialize'){
+            steps{
+                echo "Esta es el inicio"
+            }
+        }
+               
+               
+                 stage('Build') {
+            steps {
+                sh 'mvn -B package'
+               
             }
         }
         
         stage('Test') {
             steps {
                 // Ejecución de pruebas unitarias
-                sh 'mvn test'
+                sh "mvn test"
             }
         }
     }
