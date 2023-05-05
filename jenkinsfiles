@@ -1,44 +1,35 @@
+// Jenkinsfile (Declarative Pipeline)
 pipeline {
     agent any
-    
+
     stages {
-   
-                  stage('Initialize'){
-            steps{
-                echo "Esta es el inicio"
-            }
-        }
-               
-               
-                 stage('Build') {
+        stage('Build') {
             steps {
-                sh 'mvn -B package'
-               
+                echo 'Building..'
             }
         }
-        
         stage('Test') {
             steps {
-                // Ejecución de pruebas unitarias
-                sh "mvn test"
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
             }
         }
     }
-    
-    post {
-        
-        
-        success {
-            // Enviar notificación a Slack en caso de éxito
-            slackSend(channel: '#fundamentos-de-devops', message: '¡El pipeline de Maven se ejecutó con éxito!')
-        }
-        
-        failure {
-            // Enviar notificación a Slack en caso de fallo
-            slackSend(channel: '#fundamentos-de-devops', message: '¡El pipeline de Maven falló!')
+        post {
+            always {
+                slackSend(channel: '#fundamentos-de-devops', message: ' Estimado Fabián T, su pipeline se esta ejecutando, se le avisará si se ejecutó correctamente o no')
+            }
+            failure {
+                slackSend(channel: '#fundamentos-de-devops', message: ' :fire: Estimado Fabián T, su ppeline no se ejecutó, revise la configuración :fire:')
+            }
+            success {
+                slackSend(channel: '#fundamentos-de-devops', message: ' Estimado Fabián T., su pipeline se ejecutó correctamente :smile: ...')
+            }
         }
     }
-    }
-    
     
 
