@@ -2,9 +2,7 @@ pipeline {
     agent any
     
     stages {
-    
-        stage('Build') {
-            steps {
+   
                   stage('Initialize'){
             steps{
                 echo "Esta es el inicio"
